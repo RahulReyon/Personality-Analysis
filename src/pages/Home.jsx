@@ -26,7 +26,7 @@ const Home = () => {
         if (!session) {
           console.log('No active session found');
           setRedirectMessage('Please login first...');
-          setTimeout(() => navigate('/login'), 2000);
+//          setTimeout(() => navigate('/login'), 2000);
         } else {
           console.log('User is logged in:', session.user.email);
           // Extract first name from email (before the @ symbol)
