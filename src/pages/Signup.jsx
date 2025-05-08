@@ -132,7 +132,7 @@ const Signup = () => {
       await supabase.auth.signOut();
       setTimeout(() => {
         navigate('/login');
-      }, 1500);
+      }, 3000000);
     } catch (err) {
       console.error('Registration error:', err);
       setErrors({ general: 'An unexpected error occurred. Please try again.' });
