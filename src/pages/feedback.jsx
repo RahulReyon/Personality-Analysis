@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Feedback.css';
+import './feedback.css';
 import { supabase } from '../utils/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
