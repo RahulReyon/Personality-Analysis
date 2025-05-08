@@ -1,0 +1,117 @@
+.about-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #111;
+    line-height: 1.8;
+  }
+  
+  .about-container h1 {
+    text-align: center;
+    font-size: 1.9rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+  
+  .about-container h2 {
+    font-size: 1.5rem;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    color: #222;
+  }
+  
+  .about-container h3 {
+    font-size: 1.2rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .about-container p {
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+  
+  .about-container ul {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-container ul ul {
+    margin-left: 1.5rem;
+  }
+  
+  .about-container li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .about-container a {
+    color: #007bff;
+    text-decoration: none;
+  } 
+  .about-container a:hover {
+    color: #0056b3;
+  }
+    
+  .feedback-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .feedback-button:hover {
+    background-color: #45a049;
+  }
+  
+  .team-list {
+    margin-top: 15px;
+    padding-left: 20px;
+    list-style: none;
+  }
+  
+  .team-list li {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .about-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .about-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .about-box:hover {
+    transform: translateY(-4px);
+  }
+  
+  .feedback-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.2rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .feedback-button:hover {
+    background-color: #4338ca;
+  }
+  

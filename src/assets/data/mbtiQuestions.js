@@ -1,0 +1,179 @@
+const mbtiQuestions = [
+  {
+    text: "1. How much time do you spend on mobile apps daily?",
+    options: [
+      { text: "1 hr", score: 1 },
+      { text: "2 hrs", score: 2 },
+      { text: "3 hrs", score: 3 },
+      { text: "4 hrs", score: 4 },
+      { text: "More than these", score: 5 },
+    ],
+  },
+  {
+    text: "2. Which search engine application do you use most often?",
+    options: [
+      { text: "Google Search", score: 0 },
+      { text: "Microsoft Bing", score: 3 },
+      { text: "DuckDuckGo", score: 2 },
+      { text: "Yahoo", score: 2 },
+      { text: "Yandex", score: 1 },
+      { text: "Others application", score: 2 },
+    ],
+  },
+  {
+    text: "3. Which type of communication application do you use most often?",
+    options: [
+      { text: "Whatsapp", score: 0 },
+      { text: "Telegram", score: 2 },
+      { text: "Google Message", score: 3 },
+      { text: "Truecaller", score: 2 },
+      { text: "Facebook Messenger", score: 3 },
+      { text: "Others application", score: 2 },
+    ],
+  },
+  {
+    text: "4. Which entertainment application you preferred?",
+    options: [
+      { text: "Jio Hotstar", score: 2 },
+      { text: "Kuku Tv", score: 2 },
+      { text: "ZEE0", score: 3 },
+      { text: "YouTube", score: 0 },
+      { text: "Elelo", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "5. Which type of gaming application you like most?",
+    options: [
+      { text: "Free Fire Max", score: 0 },
+      { text: "Battlegrounds Mobile India (BGMI)", score: 0 },
+      { text: "Ludo King", score: 3 },
+      { text: "Candy Crush Saga", score: 2 },
+      { text: "Indian Bikes Driving", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "6. Which finance application do you use mostly?",
+    options: [
+      { text: "PhonePe", score: 0 },
+      { text: "Google Pay", score: 0 },
+      { text: "Paytm", score: 2 },
+      { text: "ET Money", score: 3 },
+      { text: "Kissht", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "7. Which shopping application you prefer?",
+    options: [
+      { text: "Meesho", score: 3 },
+      { text: "Flipkart", score: 0 },
+      { text: "Amazon India", score: 0 },
+      { text: "Myntra", score: 2 },
+      { text: "Shopsy", score: 3 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "8. Which health and fitness application do you use mostly?",
+    options: [
+      { text: "NoiseFit", score: 3 },
+      { text: "Google Fit", score: 2 },
+      { text: "Samsung Health", score: 2 },
+      { text: "FLO Period & Pregnancy Tracker", score: 3 },
+      { text: "Fastrack Smart World", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "9. Which type of travel application do you use frequently?",
+    options: [
+      { text: "Google Maps", score: 0 },
+      { text: "Where is my Train", score: 2 },
+      { text: "ixigo Trains", score: 2 },
+      { text: "IRCTC Rail Connect", score: 3 },
+      { text: "redBus", score: 3 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "10. Which education application do you use?",
+    options: [
+      { text: "Physics Wallah", score: 0 },
+      { text: "Duolingo", score: 2 },
+      { text: "Unacademy", score: 2 },
+      { text: "Vedantu", score: 3 },
+      { text: "Khan Academy", score: 0 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "11. Which music application do you listen to music on?",
+    options: [
+      { text: "Spotify", score: 0 },
+      { text: "Mi Music", score: 3 },
+      { text: "YouTube Music", score: 2 },
+      { text: "Jio Saavan", score: 2 },
+      { text: "Gaana", score: 3 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "12. Which news application do you listen to news on?",
+    options: [
+      { text: "Dailyhunt", score: 2 },
+      { text: "Way2News", score: 3 },
+      { text: "Hindi News", score: 3 },
+      { text: "Inshorts", score: 0 },
+      { text: "Google News", score: 0 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "13. Which food and grocery application do you use mostly to order?",
+    options: [
+      { text: "Zepto", score: 2 },
+      { text: "Zomato", score: 0 },
+      { text: "Swiggy", score: 0 },
+      { text: "Blinkit", score: 2 },
+      { text: "Domino's Pizza India", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "14. Which navigation and maps application do you use frequently?",
+    options: [
+      { text: "Google Maps", score: 0 },
+      { text: "Waze", score: 2 },
+      { text: "MapmyIndia (Mapple)", score: 2 },
+      { text: "Here WeGo", score: 3 },
+      { text: "Sygic GPS Navigation & Maps", score: 3 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "15. Which sports application you frequently use?",
+    options: [
+      { text: "Cricbuzz", score: 0 },
+      { text: "CREX", score: 2 },
+      { text: "Cricket Line Guru", score: 3 },
+      { text: "FanCode", score: 3 },
+      { text: "Dream11", score: 0 },
+      { text: "Others", score: 2 },
+    ],
+  },
+  {
+    text: "16. Which social networking application do you mostly use?",
+    options: [
+      { text: "Whatsapp", score: 0 },
+      { text: "Facebook", score: 2 },
+      { text: "Instagram", score: 0 },
+      { text: "YouTube", score: 0 },
+      { text: "Twitter (X)", score: 2 },
+      { text: "Others", score: 2 },
+    ],
+  },
+];
+
+export default mbtiQuestions;
