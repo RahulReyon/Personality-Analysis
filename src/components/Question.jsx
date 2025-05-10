@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Question = ({ question, onAnswer, onBack, showBack, isLastQuestion, isFirstQuestion }) => {
-  const [selectedIndexes, setSelectedIndexes] = useState([]);
+const Question = ({
+  question,
+  onAnswer,
+  onBack,
+  showBack,
+  isLastQuestion,
+  isFirstQuestion,
+  selectedOptions
+}) => {
+  const [selectedIndexes, setSelectedIndexes] = useState(selectedOptions || []);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSelectedIndexes([]); // Reset selection when question changes
-  }, [question]);
+    setSelectedIndexes(selectedOptions || []);
+  }, [selectedOptions, question]);
 
   const handleCheckboxChange = (idx) => {
     setSelectedIndexes((prev) => {
@@ -20,8 +28,13 @@ const Question = ({ question, onAnswer, onBack, showBack, isLastQuestion, isFirs
   };
 
   const handleNextOrSubmit = () => {
-    const totalScore = selectedIndexes.reduce((sum, idx) => sum + question.options[idx].score, 0);
-    onAnswer(totalScore);
+    // Only proceed if at least one option is selected
+    if (selectedIndexes.length > 0) {
+      onAnswer(selectedIndexes);
+    } else {
+      // Alert the user they need to select an option
+      alert("Please select at least one option before continuing.");
+    }
   };
 
   const handleBack = () => {
@@ -48,7 +61,6 @@ const Question = ({ question, onAnswer, onBack, showBack, isLastQuestion, isFirs
           </label>
         ))}
       </div>
-
       <div className="flex justify-between">
         {isFirstQuestion && (
           <button
@@ -66,12 +78,15 @@ const Question = ({ question, onAnswer, onBack, showBack, isLastQuestion, isFirs
             Back
           </button>
         )}
-        
         <button
           onClick={handleNextOrSubmit}
-          className={`px-6 py-2 rounded-xl font-semibold text-white ${
-            isLastQuestion ? 'bg-blue-600 hover:bg-blue-800' : 'bg-green-600 hover:bg-green-700'
-          }`}
+          disabled={selectedIndexes.length === 0}
+          className={`px-6 py-2 rounded-xl font-semibold text-white ${selectedIndexes.length === 0
+              ? 'bg-gray-400 cursor-not-allowed'
+              : isLastQuestion
+                ? 'bg-blue-600 hover:bg-blue-800'
+                : 'bg-green-600 hover:bg-green-700'
+            }`}
         >
           {isLastQuestion ? 'Submit' : 'Next'}
         </button>
@@ -80,4 +95,4 @@ const Question = ({ question, onAnswer, onBack, showBack, isLastQuestion, isFirs
   );
 };
 
-export default Question;  
+export default Question;

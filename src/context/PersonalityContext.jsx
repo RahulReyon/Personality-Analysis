@@ -11,6 +11,7 @@ export const PersonalityProvider = ({ children }) => {
   const [quizType, setQuizType] = useState('mbti');
   const [mbtiResult, setMbtiResult] = useState(null);
   const [bigFiveResult, setBigFiveResult] = useState(null);
+  const [userSelections, setUserSelections] = useState([]);
 
   const questions = quizType === 'mbti' ? mbtiQuestions : bigFiveQuestions;
 
@@ -122,7 +123,9 @@ export const PersonalityProvider = ({ children }) => {
         handleAnswer,
         resetQuiz,
         mbtiResult,
-        bigFiveResult
+        bigFiveResult,
+        userSelections,
+        setUserSelections,
       }}
     >
       {children}
