@@ -70,7 +70,7 @@ const Header = () => {
           {/* Logo and Title */}
           <div className="flex items-center space-x-3">
             <div className="bg-white p-1 rounded-full shadow-md">
-              <img src="/src/assets/Persona.png" alt="Logo" className="h-10 w-10 rounded-full" />
+              <img src="C:\Users\ACER\Desktop\Personality-Test-main\src\assets\persona.png" alt="Logo" className="h-10 w-10 rounded-full" />
             </div>
             <h1 className="text-xl font-bold md:text-2xl">
               <Link to="/" className="hover:text-indigo-100 transition-colors duration-200">
