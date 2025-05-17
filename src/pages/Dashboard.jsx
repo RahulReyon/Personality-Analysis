@@ -158,12 +158,6 @@ const Dashboard = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <button
-          onClick={() => document.documentElement.classList.toggle('dark')}
-          className="absolute top-4 right-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
-        >
-          Toggle Theme
-        </button>
 
         <div className="text-center mb-8">
           <h2 className="text-4xl font-extrabold">Your {quizType === 'mbti' ? 'MBTI' : 'Big Five'} Results</h2>
