@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../utils/supabaseClient';
+import logo from '@/assets/persona.png' // if you're using path alias '@'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -70,11 +71,11 @@ const Header = () => {
           {/* Logo and Title */}
           <div className="flex items-center space-x-3">
             <div className="bg-white rounded-full shadow-md h-16 w-16 overflow-hidden flex items-start justify-center">
-  <img
-    src="/src/assets/persona.png"
-    alt="Logo"
-    className="h-24 w-24 object-cover rounded-full -translate-y-4"
-  />
+<img
+  src={logo}
+  alt="Logo"
+  className="h-24 w-24 object-cover rounded-full -translate-y-4"
+/>
 </div>
 
             <h1 className="text-xl font-bold md:text-2xl">
@@ -152,12 +153,12 @@ const Header = () => {
                   >
                     Feedback
                   </Link>
-                  </li>
                 <li>
                   <Link to="/dashboard" className="btn btn-primary">
                     Dashboard
                   </Link>
                </li>
+                </li>
                 
                 {userName && (
                   <li className="pl-3 border-l border-indigo-300">
