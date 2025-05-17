@@ -1,17 +1,23 @@
-// Quiz.jsx
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { usePersonality } from '../context/PersonalityContext';
 import Question from '../components/Question';
 import ProgressBar from '../components/ProgressBar';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
 
 const Quiz = () => {
-  const { currentQuestion, questions, setCurrentQuestion, userId } = usePersonality();
+  const { currentQuestion, questions, setCurrentQuestion } = usePersonality();
   const [userAnswers, setUserAnswers] = useState([]);
   const navigate = useNavigate();
 
+  // Get quizType from URL query param
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const quizType = searchParams.get('type'); // 'mbti' or 'bigfive'
+
   useEffect(() => {
+    // If questions not loaded, redirect home after short delay
     const timer = setTimeout(() => {
       if (!questions || questions.length === 0) {
         navigate('/');
@@ -22,67 +28,73 @@ const Quiz = () => {
 
   // Handle answering a question
   const handleAnswer = (questionIndex, selectedOptions) => {
-    setUserAnswers(prev => {
-      // Create a new array with the same length as before
-      const newAnswers = [...prev];
-      // Update the answer for this specific question
-      // console.log("questions:",questions);
-      // console.log("qind: ",questionIndex[0]);
-      newAnswers[questionIndex] = {
-        questionText: questions[questionIndex[0]].text,
-        selectedOptions: selectedOptions
-      };
-      return newAnswers;
-    });
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[questionIndex] = {
+      questionText: questions[questionIndex].text,
+      selectedOptions: selectedOptions.map(idx => questions[questionIndex].options[idx]?.text),
+    };
+    setUserAnswers(updatedAnswers);
 
-    // Move to the next question
-    // console.log("currentque: ",currentQuestion);
     if (currentQuestion === questions.length - 1) {
-      saveAnswersToSupabase();
-      setTimeout(() => navigate('/results'), 80);
+      // Slight delay to ensure state updates before save
+      setTimeout(() => {
+        saveAnswersToSupabase(updatedAnswers);
+        navigate('/results');
+      }, 100);
     } else {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
 
-  // Go back to the previous question
+  // Go back to previous question
   const goBack = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(prev => prev - 1);
+      setCurrentQuestion(currentQuestion - 1);
     }
   };
 
   // Save all answers to Supabase
-  const saveAnswersToSupabase = async () => {
-    console.log("userAns: ",userAnswers);
+  const saveAnswersToSupabase = async (answersToSave) => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
 
       if (!session || !session.user) {
-        console.log('No active session found, redirecting to login');
         alert('You must be logged in to submit feedback');
         navigate('/login');
         return;
       }
 
       const userId = session.user.id;
-      console.log("userAn:" ,userAnswers);
-      // Format the selected options data for storage
-      const formattedAnswers = userAnswers.filter(Boolean).map(answer => ({
+
+      const formattedAnswers = answersToSave.filter(Boolean).map(answer => ({
         questionText: answer.questionText,
-        selectedOptions: answer.selectedOptions
+        selectedOptions: answer.selectedOptions,
       }));
 
-      // Save to Supabase
+      // Set update payload based on quizType
+      let updatePayload = {};
+      if (quizType === 'mbti') {
+        updatePayload = { mbti_responses: formattedAnswers };
+      } else if (quizType === 'bigfive') {
+        updatePayload = { bigfive_responses: formattedAnswers };
+      } else {
+        console.warn('Unknown quiz type. Nothing was saved.');
+        return;
+      }
+
+      console.log("Saving for userId:", userId);
+      console.log("Quiz type:", quizType);
+      console.log("Payload:", updatePayload);
+
+      // Use upsert to insert or update
       const { error } = await supabase
         .from('userinfo')
-        .update({
-          selected_options: formattedAnswers,
-        })
-        .eq('id', userId)
+        .upsert([{ id: userId, ...updatePayload }]);
 
       if (error) {
-        console.error('Error saving answers:', error);
+        console.error('Error saving answers:', error.message, error.details);
+      } else {
+        console.log('Answers saved successfully');
       }
     } catch (error) {
       console.error('Failed to save answers:', error);
@@ -98,7 +110,11 @@ const Quiz = () => {
   }
 
   return (
+    <PageAnimationWrapper>
     <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-center text-xl font-semibold mb-4">
+        {quizType ? `Starting ${quizType.toUpperCase()} Quiz` : 'No quiz type selected'}
+      </h1>
       <ProgressBar current={currentQuestion + 1} total={questions.length} />
       <Question
         question={questions[currentQuestion]}
@@ -111,6 +127,7 @@ const Quiz = () => {
         isFirstQuestion={currentQuestion === 0}
       />
     </div>
+    </PageAnimationWrapper>
   );
 };
 

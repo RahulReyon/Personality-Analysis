@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { usePersonality } from '../context/PersonalityContext';
 import { supabase } from '../utils/supabaseClient';
 import { Brain, CheckCircle, Loader2, ArrowRight } from 'lucide-react';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,42 +14,58 @@ const Home = () => {
   const [redirectMessage, setRedirectMessage] = useState('');
   const [userName, setUserName] = useState('');
 
-  useEffect(() => {
-    async function checkAuthStatus() {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Error checking authentication status:', error.message);
-          setRedirectMessage('An error occurred while checking login status.');
-          navigate('/login');
-          return;
-        }
-        
-        if (!session) {
-          console.log('No active session found');
-          setRedirectMessage('Please login first...');
-//          setTimeout(() => navigate('/login'), 2000);
-        } else {
-          console.log('User is logged in:', session.user.email);
-          // Extract first name from email (before the @ symbol)
-          const firstName = session.user.email.split('@')[0].split('.')[0];
-          setUserName(firstName.charAt(0).toUpperCase() + firstName.slice(1));
-          setCheckingLogin(false);
-        }
-      } catch (err) {
-        console.error('Unexpected error checking auth status:', err);
-        setRedirectMessage('An error occurred. Please try again.');
-        navigate('/login');
-      }
-    }
-    
-    checkAuthStatus();
-  }, [navigate]);
+useEffect(() => {
+  async function checkAuthStatus() {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
 
+      if (error) {
+        console.error('Error checking authentication status:', error.message);
+        setRedirectMessage('An error occurred while checking login status.');
+        navigate('/login');
+        return;
+      }
+
+      if (!session) {
+        console.log('No active session found');
+        setRedirectMessage('Please login first...');
+        return;
+      }
+
+      const userId = session.user.id;
+      console.log('User is logged in:', session.user.email);
+
+      // ✅ Fetch user's actual name from Supabase
+      const { data: userData, error: userError } = await supabase
+        .from('userinfo')
+        .select('name')
+        .eq('id', userId)
+        .single();
+
+      if (userError) {
+        console.warn('Could not fetch name from userinfo:', userError.message);
+        setUserName('User');
+      } else {
+        setUserName(userData?.name || 'User');
+      }
+
+      setCheckingLogin(false);
+    } catch (err) {
+      console.error('Unexpected error checking auth status:', err);
+      setRedirectMessage('An error occurred. Please try again.');
+      navigate('/login');
+    }
+  }
+
+  checkAuthStatus();
+}, [navigate]);
+
+
+  // Updated startQuiz function to include quiz type in URL query
   const startQuiz = (type) => {
     setQuizType(type);
-    navigate('/quiz');
+    console.log("Navigating to quiz type:", type);
+    navigate(`/quiz?type=${type}`);
   };
 
   if (checkingLogin) {
@@ -70,6 +89,7 @@ const Home = () => {
   }
 
   return (
+    <PageAnimationWrapper>
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -136,6 +156,15 @@ const Home = () => {
           </div>
         </div>
 
+         <div className="mt-8 text-center">
+         <Link
+              to="/dashboard"
+              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-xl font-semibold transition"
+              >
+              View Your Results
+        </Link>
+        </div>
+
         {/* Benefits Section */}
         <div className="mt-12 bg-white rounded-2xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-center mb-8">Why Take a Personality Assessment?</h2>
@@ -170,6 +199,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </PageAnimationWrapper>
   );
 };
 

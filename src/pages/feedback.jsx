@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './feedback.css';
 import { supabase } from '../utils/supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState('');
@@ -108,6 +109,7 @@ const Feedback = () => {
   };
 
   return (
+    <PageAnimationWrapper>
     <div className="feedback-container">
       <h1 className="feedback-title">Feedback</h1>
 
@@ -156,6 +158,7 @@ const Feedback = () => {
         </div>
       )}
     </div>
+    </PageAnimationWrapper>
   );
 };
 

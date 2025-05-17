@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BackgroundLayout from '../components/BackgroundLayout';
 import { supabase } from '../utils/supabaseClient';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
+
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -142,6 +144,7 @@ const Signup = () => {
   };
 
   return (
+    <PageAnimationWrapper>
     <BackgroundLayout>
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-8 max-w-md w-full border">
@@ -219,6 +222,7 @@ const Signup = () => {
         </div>
       </div>
     </BackgroundLayout>
+    </PageAnimationWrapper>
   );
 };
 

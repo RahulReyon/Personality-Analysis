@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BackgroundLayout from '../components/BackgroundLayout';
 import { supabase } from '../utils/supabaseClient';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -18,15 +20,13 @@ const Login = () => {
     async function checkAuthStatus() {
       try {
         const { data } = await supabase.auth.getSession();
-        
         if (data?.session) {
-          navigate('/home');
+          navigate('/complete-profile');
         }
       } catch (error) {
         console.error('Auth check error:', error);
-      } 
+      }
     }
-    
     checkAuthStatus();
   }, [navigate]);
 
@@ -57,7 +57,7 @@ const Login = () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       });
 
       if (error) {
@@ -65,8 +65,8 @@ const Login = () => {
         return;
       }
 
-      if (data && data.user) {
-        navigate('/home');
+      if (data?.user) {
+        navigate('/complete-profile');
       } else {
         setLoginError('Login failed. Please try again.');
       }
@@ -77,9 +77,9 @@ const Login = () => {
   };
 
   return (
+    <PageAnimationWrapper>
     <BackgroundLayout>
       <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: `url('/your-homepage-image.jpg')` }}>
-        {/* Login Box */}
         <div className="relative z-10 flex items-center justify-center min-h-screen">
           <div className="p-8 max-w-md w-full bg-white bg-opacity-80 backdrop-blur-md rounded-2xl shadow-xl">
             <h1 className="text-3xl font-bold mb-6 text-blue-700 text-center">Login to Your Account</h1>
@@ -116,9 +116,7 @@ const Login = () => {
                 {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
               </div>
 
-              {loginError && (
-                <p className="text-red-600 text-sm text-center">{loginError}</p>
-              )}
+              {loginError && <p className="text-red-600 text-sm text-center">{loginError}</p>}
 
               <button
                 type="submit"
@@ -134,19 +132,12 @@ const Login = () => {
                 Reset here
               </Link>
             </p>
-
-            <p className="text-center mt-4 text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/signup" className="text-blue-600 hover:underline">
-                Sign Up
-              </Link>
-            </p>
           </div>
         </div>
       </div>
     </BackgroundLayout>
+    </PageAnimationWrapper>
   );
 };
 
 export default Login;
-

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import PageTransition from './components/PageTransition';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Results from './pages/Results';
@@ -10,6 +11,8 @@ import Login from './pages/Login';
 import Feedback from './pages/feedback';
 import ResetPassword from './components/ResetPassword';
 import { supabase } from './utils/supabaseClient';
+import CompleteProfile from './pages/CompleteProfile';
+import Dashboard from './pages/Dashboard'
 
 const AuthRedirect = () => {
   const navigate = useNavigate();
@@ -54,15 +57,17 @@ function App() {
         <Header />
         <AuthRedirect />
         <Routes>
-          <Route path="/" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/" element={<PageTransition><Signup /></PageTransition>} />
+          <Route path="/home" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/quiz" element={<PageTransition><Quiz /></PageTransition>} />
+          <Route path="/results" element={<PageTransition><Results /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+          <Route path="/signup" element={<PageTransition><Signup /></PageTransition>} />
+          <Route path="/reset-password" element={<PageTransition><ResetPassword /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+          <Route path="/complete-profile" element={<PageTransition><CompleteProfile /></PageTransition>} />
+          <Route path="/feedback" element={<PageTransition><Feedback /></PageTransition>} />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './About.css';
+import PageAnimationWrapper from '../components/PageAnimationWrapper';
 
 const About = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const About = () => {
   };
 
   return (
+    <PageAnimationWrapper>
     <div className="about-container">
   <div className="about-box">
     <h1>Personality Analysis by Mobile App Usage</h1>
@@ -114,6 +116,7 @@ const About = () => {
 </div>
 
 </div>
+</PageAnimationWrapper>
 
   );
 };

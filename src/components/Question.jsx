@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Question = ({
   question,
+  questionIndex,
   onAnswer,
   onBack,
   showBack,
@@ -30,7 +31,8 @@ const Question = ({
   const handleNextOrSubmit = () => {
     // Only proceed if at least one option is selected
     if (selectedIndexes.length > 0) {
-      onAnswer(selectedIndexes);
+      onAnswer(questionIndex, selectedIndexes);
+;
     } else {
       // Alert the user they need to select an option
       alert("Please select at least one option before continuing.");
