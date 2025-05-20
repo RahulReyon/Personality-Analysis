@@ -100,8 +100,9 @@ useEffect(() => {
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Personality Assessment</h1>
           <p className="text-xl text-gray-600 mb-2">Welcome{userName ? `, ${userName}` : ''}!</p>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover more about yourself through scientifically validated personality assessments.
-            These insights can help improve your self-awareness and personal development.
+            <strong className="font-semibold text-red-600 mr-1 blink">Read important instruction: </strong>
+            This is a personality test web application which analyzes your personality type with the help of questionaiire which are based on your interactivity of phone and app usage.
+We request you to choose the options honestly in order to know your correct personality type.
           </p>
         </div>
 
