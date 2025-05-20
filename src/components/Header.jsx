@@ -153,12 +153,12 @@ const Header = () => {
                   >
                     Feedback
                   </Link>
+                </li>
                 <li>
                   <Link to="/dashboard" className="btn btn-primary">
                     Dashboard
                   </Link>
                </li>
-                </li>
                 
                 {userName && (
                   <li className="pl-3 border-l border-indigo-300">
