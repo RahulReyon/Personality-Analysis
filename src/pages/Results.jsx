@@ -154,7 +154,7 @@ const Results = () => {
           )}
 
           <div className="mt-6 text-sm text-gray-600">
-            <p>Score: {score}</p>
+            
             <p className="mt-1">Results generated on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</p>
           </div>
 
